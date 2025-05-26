@@ -30,11 +30,11 @@ This document summarizes the key accomplishments, challenges, and known limitati
 
 3. **Build Image Repetition Issues:**
    - Rebockerignore` and reduced context size for efficiency.uilding large Docker images on every change was time-consuming.
-   - **Fix:** Used `.d
+   - **Fix:** Used `.dockerignore` and reduced context size for efficiency.
 
 4. **ONNX Input Shape Mismatch:**
    - `Required inputs (['length']) are missing from input feed (['audio_signal'])`. This was due to Expected shape was `(batch, channel, time)` but got `(batch, time)`
-   - **Fix:** Resolved by reshaping to `(1, 1, time_steps)` with np.expand_dims
+   - **Fix:** Resolved by reshaping to `(1, 1, time_steps)` with np.expand_dims.
 
 5. **GitHub Push Failure Due to File Size**
  
