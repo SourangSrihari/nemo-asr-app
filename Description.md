@@ -36,22 +36,55 @@ This document summarizes the key accomplishments, challenges, and known limitati
    - `Required inputs (['length']) are missing from input feed (['audio_signal'])`. This was due to Expected shape was `(batch, channel, time)` but got `(batch, time)`
    - **Fix:** Resolved by reshaping to `(1, 1, time_steps)` with np.expand_dims
 
+5. **GitHub Push Failure Due to File Size**
+ 
+   - Model files `asr_model.onnx` and `stt_hi_conformer_ctc_medium.nemo` exceeded GitHub’s 100MB file size limit, causing push failures.
+
+
+   - **Fix:**
+
+     - Removed them from Git tracking.
+     - Added the files to `.gitignore`.
+     - Rewrote Git history using `git filter-repo` to remove traces of the large files.
+     - Hosted the model files externally via **Google Drive**.
+
 
 ---
 
-## ❌ Limitations or Unimplemented Components
+## 🚫 Limitations or Unimplemented Components
 
-- **CI/CD Pipeline (GitHub Actions)** was not added initially.
-- **Test file** was not written during development phase.
-- **Large image size (~2–3GB)** may be unsuitable for low-bandwidth environments.
+- Inference is **synchronous**; async optimization was skipped.
+- Large model files (`asr_model.onnx`, `stt_hi_conformer_ctc_medium.nemo`) are **not hosted in the repo** due to GitHub's 100MB limit.
+  - **Manual download is required** if you're building the image locally.
+- No frontend or graphical UI — interaction is limited to:
+  - Swagger UI (`/docs`)
+  - `curl` CLI
 
 ---
 
-## 🔄 Plan to Overcome Limitations
+### ❓ Why Async Inference Was Not Implemented
 
-- Add GitHub Actions workflow for CI/CD with Docker image build and push.
-- Include basic FastAPI endpoint test script (`test_main.py`) to validate the API.
-- Optimize Dockerfile with `multi-stage builds` or remove unused dependencies to shrink image size.
+Although FastAPI supports asynchronous endpoints, true async execution wasn't used because:
+
+- **ONNX Runtime is synchronous** — `InferenceSession.run()` blocks the thread and has no async API.
+- **Librosa and NumPy** (used for audio loading and preprocessing) are CPU-bound and synchronous.
+- Wrapping these in `async def` wouldn’t provide real concurrency benefits.
+
+Implementing true async would require:
+
+- Async-compatible inference (e.g., **Triton Inference Server** or **TensorRT**)
+- Background task queues (e.g., **Celery** with workers)
+---
+
+
+## 🚀 Future Improvements
+
+- **Async Inference**: Use `run_in_executor` with FastAPI to offload blocking ONNX inference, or adopt Triton Inference Server for full async support.
+
+- **Model Size Optimization**: Apply ONNX quantization (e.g., INT8/FP16) or switch to lighter models like QuartzNet.
+
+- **Minimal Web UI**: Add a basic HTML/JS interface for audio upload and transcription display, integrated with the FastAPI backend.
+
 
 ---
 
@@ -67,3 +100,16 @@ This document summarizes the key accomplishments, challenges, and known limitati
 
 - Input audio is clean, short (5–10s), and in Hindi
 - User has Docker Desktop installed and running
+
+---
+## 🎯 Bonus Implementation
+
+### ✅ CI/CD with GitHub Actions
+- Configured a CI/CD pipeline using **GitHub Actions**.
+- Automatically builds the Docker image and pushes it to Docker Hub on every push to the `main` branch.
+- **Workflow File:** `.github/workflows/docker-build.yml`
+
+### ✅ Test File for `/transcribe`
+- Created a `test_transcribe.py` script.
+- It sends a sample `.wav` file to the `/transcribe` endpoint.
+- Prints the response JSON containing the transcription and confidence scores.
