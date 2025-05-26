@@ -53,12 +53,14 @@ This document summarizes the key accomplishments, challenges, and known limitati
 
 ## Limitations or Unimplemented Components
 
-- Inference is **synchronous**; async optimization was skipped.
-- Large model files (`asr_model.onnx`, `stt_hi_conformer_ctc_medium.nemo`) are **not hosted in the repo** due to GitHub's 100MB limit.
-  - **Manual download is required** if you're building the image locally.
-- No frontend or graphical UI — interaction is limited to:
+1. Inference is **synchronous**; async optimization was skipped. **(Reason explained in the next section)**
+2. Large model files (`asr_model.onnx`, `stt_hi_conformer_ctc_medium.nemo`) are **not hosted in the repo** due to GitHub's 100MB limit.
+  - Manual download is required if you're building the image locally.
+  **Reason for not implementing:** The model files exceeded GitHub's 100MB file size limit, which prevents them from being committed directly to the repository. While Git Large File Storage (LFS) is an option, it adds complexity and requires additional setup for users. To keep the setup simple and accessible, the files were shared via a public Google Drive link for manual download when building locally.
+3. No frontend or graphical UI — interaction is limited to:
   - Swagger UI (`/docs`)
   - `curl` CLI
+  **Reason for not implementing:** The primary focus of this project was to successfully deploy the ASR model as a backend API service, aligning with the core assignment requirements. Due to time constraints and to ensure the backend was stable and functional, a dedicated frontend or graphical UI was not implemented. However, tools like Swagger UI, Postman, and curl were used to demonstrate and validate the functionality. A lightweight UI could be added in future improvements.
 
 ---
 
