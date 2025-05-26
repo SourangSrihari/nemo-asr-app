@@ -156,9 +156,17 @@ docker build -t nemo-asr-app .
 - If using the prebuilt image from Docker Hub `(sourang2000/nemo-asr-app)`, no additional setup is required — the files are already included.
 
 
-## 🔊 Sample Input & Output
+## Sample Input & Output
 
 You can find a test `.wav` audio clip and a sample JSON output in the [`sample_data`](./sample_data/) folder.
 
 - [`sample_audio.wav`](./sample_data/sample_audio.wav) — Test file for `/transcribe`
 - [`sample_response.json`](./sample_data/sample_response.json) — Sample response from the API
+
+
+
+## Video Demonstration
+
+Watch a short walkthrough of the application in action, including setup and a transcription example.
+
+**Google Drive Link**: [App_Demo (Demo.mp4)](https://drive.google.com/drive/folders/14U7l9Ahs1CbCfYrlceQNLeW3PcTq5DNY?usp=sharing)
