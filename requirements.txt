@@ -1,0 +1,23 @@
+# Build tools
+Cython==3.1.1
+
+# Web framework
+fastapi==0.110.1
+uvicorn[standard]==0.29.0
+
+# Audio processing
+numpy==1.26.4
+soundfile==0.12.1
+librosa==0.10.1
+
+# Model inference
+onnxruntime==1.17.1
+
+# NVIDIA NeMo for ASR
+nemo_toolkit[asr]==1.23.0
+
+# HuggingFace support (required for Nemo)
+huggingface_hub==0.23.2
+
+# Form data support for FastAPI file uploads
+python-multipart==0.0.6
