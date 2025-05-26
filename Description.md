@@ -51,7 +51,7 @@ This document summarizes the key accomplishments, challenges, and known limitati
 
 ---
 
-## 🚫 Limitations or Unimplemented Components
+## Limitations or Unimplemented Components
 
 - Inference is **synchronous**; async optimization was skipped.
 - Large model files (`asr_model.onnx`, `stt_hi_conformer_ctc_medium.nemo`) are **not hosted in the repo** due to GitHub's 100MB limit.
@@ -62,7 +62,7 @@ This document summarizes the key accomplishments, challenges, and known limitati
 
 ---
 
-### ❓ Why Async Inference Was Not Implemented
+### Why Async Inference Was Not Implemented
 
 Although FastAPI supports asynchronous endpoints, true async execution wasn't used because:
 
@@ -77,7 +77,7 @@ Implementing true async would require:
 ---
 
 
-## 🚀 Future Improvements
+## Future Improvements
 
 - **Async Inference**: Use `run_in_executor` with FastAPI to offload blocking ONNX inference, or adopt Triton Inference Server for full async support.
 
@@ -88,7 +88,7 @@ Implementing true async would require:
 
 ---
 
-## 🧩 Known Limitations
+## Known Limitations
 
 - Large Docker image (~2.5GB compressed)
 - Transcription accuracy depends on audio quality and speaker clarity
@@ -96,20 +96,20 @@ Implementing true async would require:
 
 ---
 
-## 🧠 Assumptions
+## Assumptions
 
 - Input audio is clean, short (5–10s), and in Hindi
 - User has Docker Desktop installed and running
 
 ---
-## 🎯 Bonus Implementation
+## Bonus Implementation
 
-### ✅ CI/CD with GitHub Actions
+### CI/CD with GitHub Actions
 - Configured a CI/CD pipeline using **GitHub Actions**.
 - Automatically builds the Docker image and pushes it to Docker Hub on every push to the `main` branch.
 - **Workflow File:** `.github/workflows/docker-build.yml`
 
-### ✅ Test File for `/transcribe`
+### Test File for `/transcribe`
 - Created a `test_transcribe.py` script.
 - It sends a sample `.wav` file to the `/transcribe` endpoint.
 - Prints the response JSON containing the transcription and confidence scores.

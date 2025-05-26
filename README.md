@@ -82,11 +82,6 @@ docker run -p 8000:8000 nemo-asr-app
 
 
 
-3. **Visit Swagger UI**
- 
-   Open your browser and go to [http://localhost:8000/docs#/](http://localhost:8000/docs#/)
-
-
 
 ## Transcription Endpoint: `/transcribe`
 
@@ -123,7 +118,7 @@ You will receive a JSON response containing the transcription, token IDs, and co
 
 ---
 
-### 💻 Option B: Using `curl` (Windows CMD)
+### Option B: Using `curl` (Windows CMD)
 
 In another command prompt, run the following command:
 
@@ -144,9 +139,9 @@ curl -X POST http://localhost:8000/transcribe -H "accept: application/json" -F "
 - Runtime dependencies are installed via **requirements.txt**.
 
 
-## 📁 Repository Notes
+## Repository Notes
 
-### ⚠️ Model Files Disclaimer
+### Model Files Disclaimer
 
 > **Note:** The model files `asr_model.onnx` and `stt_hi_conformer_ctc_medium.nemo` are **excluded** from this GitHub repository because they exceed GitHub's 100MB file size limit.
 
@@ -160,3 +155,10 @@ docker build -t nemo-asr-app .
 
 - If using the prebuilt image from Docker Hub `(sourang2000/nemo-asr-app)`, no additional setup is required — the files are already included.
 
+
+## 🔊 Sample Input & Output
+
+You can find a test `.wav` audio clip and a sample JSON output in the [`sample_data`](./sample_data/) folder.
+
+- [`sample_audio.wav`](./sample_data/sample_audio.wav) — Test file for `/transcribe`
+- [`sample_response.json`](./sample_data/sample_response.json) — Sample response from the API
