@@ -1,2 +1,4 @@
 "asr_model.onnx" 
 "stt_hi_conformer_ctc_medium.nemo" 
+asr_model.onnx 
+stt_hi_conformer_ctc_medium.nemo 
